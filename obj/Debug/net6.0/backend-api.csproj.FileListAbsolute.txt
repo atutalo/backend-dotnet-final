@@ -8,6 +8,7 @@
 /Users/amanda.tutalo/Desktop/backend-dotnet/final-project/backend-api/bin/Debug/net6.0/AspNetCore.Identity.Mongo.dll
 /Users/amanda.tutalo/Desktop/backend-dotnet/final-project/backend-api/bin/Debug/net6.0/BCrypt.Net-Next.dll
 /Users/amanda.tutalo/Desktop/backend-dotnet/final-project/backend-api/bin/Debug/net6.0/DnsClient.dll
+/Users/amanda.tutalo/Desktop/backend-dotnet/final-project/backend-api/bin/Debug/net6.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
 /Users/amanda.tutalo/Desktop/backend-dotnet/final-project/backend-api/bin/Debug/net6.0/Microsoft.Data.Sqlite.dll
 /Users/amanda.tutalo/Desktop/backend-dotnet/final-project/backend-api/bin/Debug/net6.0/Microsoft.EntityFrameworkCore.dll
 /Users/amanda.tutalo/Desktop/backend-dotnet/final-project/backend-api/bin/Debug/net6.0/Microsoft.EntityFrameworkCore.Abstractions.dll
@@ -18,6 +19,8 @@
 /Users/amanda.tutalo/Desktop/backend-dotnet/final-project/backend-api/bin/Debug/net6.0/Microsoft.IdentityModel.Abstractions.dll
 /Users/amanda.tutalo/Desktop/backend-dotnet/final-project/backend-api/bin/Debug/net6.0/Microsoft.IdentityModel.JsonWebTokens.dll
 /Users/amanda.tutalo/Desktop/backend-dotnet/final-project/backend-api/bin/Debug/net6.0/Microsoft.IdentityModel.Logging.dll
+/Users/amanda.tutalo/Desktop/backend-dotnet/final-project/backend-api/bin/Debug/net6.0/Microsoft.IdentityModel.Protocols.dll
+/Users/amanda.tutalo/Desktop/backend-dotnet/final-project/backend-api/bin/Debug/net6.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 /Users/amanda.tutalo/Desktop/backend-dotnet/final-project/backend-api/bin/Debug/net6.0/Microsoft.IdentityModel.Tokens.dll
 /Users/amanda.tutalo/Desktop/backend-dotnet/final-project/backend-api/bin/Debug/net6.0/Microsoft.OpenApi.dll
 /Users/amanda.tutalo/Desktop/backend-dotnet/final-project/backend-api/bin/Debug/net6.0/MongoDB.Bson.dll
@@ -73,6 +76,3 @@
 /Users/amanda.tutalo/Desktop/backend-dotnet/final-project/backend-api/obj/Debug/net6.0/backend-api.pdb
 /Users/amanda.tutalo/Desktop/backend-dotnet/final-project/backend-api/obj/Debug/net6.0/backend-api.genruntimeconfig.cache
 /Users/amanda.tutalo/Desktop/backend-dotnet/final-project/backend-api/obj/Debug/net6.0/ref/backend-api.dll
-/Users/amanda.tutalo/Desktop/backend-dotnet/final-project/backend-api/bin/Debug/net6.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
-/Users/amanda.tutalo/Desktop/backend-dotnet/final-project/backend-api/bin/Debug/net6.0/Microsoft.IdentityModel.Protocols.dll
-/Users/amanda.tutalo/Desktop/backend-dotnet/final-project/backend-api/bin/Debug/net6.0/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll

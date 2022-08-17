@@ -8,9 +8,9 @@ namespace backend_api.Repositories;
 
 public class AuthService : IAuthService
 {
-    private static UserRepository? _userRepo;
-    private static IConfiguration? _config;
-    public AuthService(UserRepository userRepo, IConfiguration config){
+    private IUserRepository _userRepo;
+    private IConfiguration _config;
+    public AuthService(IUserRepository userRepo, IConfiguration config){
         _userRepo = userRepo; 
         _config = config;
     }
@@ -19,7 +19,7 @@ public class AuthService : IAuthService
         var passwordHash = BCrypt.Net.BCrypt.HashPassword(user.Password);
         user.Password = passwordHash;
 
-        CreateUser(user);
+        _userRepo.CreateUser(user);
         return user;
   
     }
@@ -27,7 +27,7 @@ public class AuthService : IAuthService
     public async Task<string> SignIn(SignInRequest request)
     {
       //take the request and call the GetUsername method to get the specific User
-        var user = await _userRepo?.GetUserByUsername(request.Email)!;
+        var user = await _userRepo.GetUserByUsername(request.Email)!;
         var verified = false;
         var myUser = user.FirstOrDefault();
         //verify the password is correct

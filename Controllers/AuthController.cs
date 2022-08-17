@@ -17,12 +17,6 @@ public class AuthController : ControllerBase
         _authService = authService;
     }
 
-    // [HttpGet]
-    // public async Task<ActionResult<IEnumerable<User>>> GetAllUsers()
-    // {
-    //     return Ok(await _authService.GetAllUsers());
-    // }
-
     [HttpPost]
     [Route("register")]
     public ActionResult CreateUser(User user)
@@ -56,4 +50,5 @@ public class AuthController : ControllerBase
         //If the passwords match, the token will be returned
         return Ok(token);
     }
+
 }

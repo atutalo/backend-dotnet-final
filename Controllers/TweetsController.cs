@@ -23,6 +23,7 @@ public class TweetsController : ControllerBase
     {
        return Ok (await _tweetRepository.GetAllTweets());
     }
+
     [HttpPost]
     public async Task<ActionResult<Tweet>> CreateTweet(Tweet tweet) {
         if (!ModelState.IsValid || tweet == null)
@@ -46,7 +47,5 @@ public class TweetsController : ControllerBase
         await _tweetRepository.DeleteTweet(tweetId);
         return NoContent();    
         }
-
-    
 
 }

@@ -19,9 +19,4 @@ public class User
     public string? LastName { get; set; }
     [BsonElement("Location")]
     public string? Location { get; set; }
-    [BsonElement("CreatedDate")]
-    public string? CreatedDate { get; set; }
-    [BsonElement("tweets")]
-    public List<Tweet>? tweets {get; set;}
-
 } 

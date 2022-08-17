@@ -17,7 +17,7 @@ public class UserRepository : IUserRepository
         var database = client.GetDatabase(settings.DatabaseName);
 
         //Get the collection of Tweets from the database using the tweet collection name (save in _tweets variable)
-        _users = database.GetCollection<User>(settings.TweetCollectionName);
+        _users = database.GetCollection<User>(settings.UserCollectionName);
     }
 
     public async Task<User> CreateUser(User newUser)

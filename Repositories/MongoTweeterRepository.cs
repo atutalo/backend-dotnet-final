@@ -7,6 +7,7 @@ namespace backend_api.Repositories
     {
         //use IMongoCollection to access our collection of tweet objects called _tweets from MongoDb
         private readonly IMongoCollection<Tweet> _tweets;
+
         public MongoTweeterRepository(ITweeterDatabaseSettings settings)
         {
             //Pull the "Connection String" from the appsettings.json and initiate a new instance of the MongoClient class
