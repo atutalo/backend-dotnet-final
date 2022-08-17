@@ -5,10 +5,10 @@ namespace backend_api.Repositories
 {
     public interface ITweetRepository
     {
-        IEnumerable<Tweet> GetAllTweets();
-        Tweet CreateTweet(Tweet newTweet);
-        Tweet EditTweet(Tweet newTweet);
-         void DeleteTweet(string tweetId);
+        Task<IEnumerable<Tweet>> GetAllTweets();
+        Task<Tweet> CreateTweet(Tweet newTweet);
+        Task<Tweet> EditTweet(Tweet newTweet);
+        Task DeleteTweet(string tweetId);
 
     }
 }

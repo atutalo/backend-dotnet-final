@@ -18,26 +18,28 @@ namespace backend_api.Repositories
             _tweets = database.GetCollection<Tweet>(settings.TweetCollectionName);
         }
 
-        public Tweet CreateTweet(Tweet newTweet)
+        public async Task<Tweet> CreateTweet(Tweet newTweet)
         {
-            _tweets.InsertOne(newTweet);
+            await _tweets.InsertOneAsync(newTweet);
             return newTweet;
         }
 
-        public void DeleteTweet(string tweetId)
+        public async Task DeleteTweet(string tweetId)
         {
-            _tweets.DeleteOne(tweet => tweet.tweetId == tweetId);
+            await _tweets.DeleteOneAsync(tweet => tweet.tweetId == tweetId);
         }
 
-        public Tweet EditTweet(Tweet newTweet)
+        public async Task<Tweet> EditTweet(Tweet newTweet)
         {
-            _tweets.ReplaceOne(tweet => tweet.tweetId == newTweet.tweetId, newTweet);
+            await _tweets.ReplaceOneAsync(tweet => tweet.tweetId == newTweet.tweetId, newTweet);
             return newTweet;
         }
 
-        public IEnumerable<Tweet> GetAllTweets()
+        public async Task<IEnumerable<Tweet>> GetAllTweets()
         {
-            return _tweets.Find(tweet => true).ToList();
+            var allTweets = await _tweets.FindAsync(tweet => true);
+            return allTweets.ToList();
         }
+
     }
 }

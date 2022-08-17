@@ -1,17 +1,27 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
-namespace l11_tokens.Models;
+namespace backend_api.Models;
 
 public class User
 {
-    [JsonIgnore]
-    public int UserId { get; set; }
     [Required]
-    public string? Username {get; set;}
+    [BsonElement("Username")]
+    public string? Username { get; set; }
     [Required]
+    [BsonElement("Password")]
     public string? Password { get; set; }
+    [BsonElement("FirstName")]
     public string? FirstName { get; set; }
+    [BsonElement("LastName")]
     public string? LastName { get; set; }
-  
-}
+    [BsonElement("Location")]
+    public string? Location { get; set; }
+    [BsonElement("CreatedDate")]
+    public string? CreatedDate { get; set; }
+    [BsonElement("tweets")]
+    public List<Tweet>? tweets {get; set;}
+
+} 

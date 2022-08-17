@@ -1,3 +1,5 @@
+using AspNetCore.Identity.Mongo;
+using AspNetCore.Identity.Mongo.Model;
 using backend_api.Repositories;
 using Microsoft.Extensions.Options;
 
@@ -5,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
+
+//Add authorization
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -15,6 +19,7 @@ builder.Services.Configure<TweeterDatabaseSettings>(
     builder.Configuration.GetSection("TweeterDatabaseSettings"));
 builder.Services.AddSingleton<ITweeterDatabaseSettings>(t => t.GetRequiredService<IOptions<TweeterDatabaseSettings>>().Value);
 builder.Services.AddScoped<ITweetRepository, MongoTweeterRepository>();
+//builder.Services.AddScoped<IAuthService, AuthService>();
 
 
 var app = builder.Build();
