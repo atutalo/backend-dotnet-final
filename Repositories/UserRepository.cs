@@ -22,14 +22,19 @@ public class UserRepository : IUserRepository
 
     public async Task<User> CreateUser(User newUser)
     {
-        await _users.InsertOneAsync(newUser);
+        try {
+            await _users.InsertOneAsync(newUser);
+        } catch (Exception ex){
+            Console.WriteLine(ex.ToString());
+        }
         return newUser;
     }
 
-    public async Task<IEnumerable<User>> GetUserByUsername(string username)
+    public async Task<User> GetUserByUsername(string username)
     {
-        var foundUser = await _users.FindAsync(u => username == u.Username);
-        return foundUser.ToList();
+        var findUsers = await _users.FindAsync(user => true);
+        var foundUser = findUsers.ToList().FirstOrDefault(user => user.Username == username);
+        return foundUser;
         
     }
 

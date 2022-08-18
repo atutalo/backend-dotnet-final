@@ -7,16 +7,22 @@ namespace backend_api.Models;
 
 public class User
 {
+    [BsonId]
     [Required]
-    [BsonElement("Username")]
+    [BsonElement("username")]
     public string? Username { get; set; }
     [Required]
-    [BsonElement("Password")]
+    [BsonElement("password")]
     public string? Password { get; set; }
-    [BsonElement("FirstName")]
+    [BsonElement("firstName")]
     public string? FirstName { get; set; }
-    [BsonElement("LastName")]
+    [BsonElement("lastName")]
     public string? LastName { get; set; }
-    [BsonElement("Location")]
+    [BsonElement("location")]
     public string? Location { get; set; }
+    [BsonElement("CreatedDate")]
+    public string? CreatedDate { get; set; }
+    [BsonElement("tweets")]
+    public List<Tweet>? tweets {get; set;}
+
 } 

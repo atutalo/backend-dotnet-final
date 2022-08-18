@@ -7,7 +7,7 @@ namespace backend_api.Repositories
     {
         Task<IEnumerable<User>> GetAllUsers();
         Task<User> CreateUser(User newUser);
-        Task<IEnumerable<User>> GetUserByUsername(string username);
+        Task<User> GetUserByUsername(string username);
         
     }
 }

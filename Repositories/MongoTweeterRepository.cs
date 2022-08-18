@@ -21,7 +21,11 @@ namespace backend_api.Repositories
 
         public async Task<Tweet> CreateTweet(Tweet newTweet)
         {
-            await _tweets.InsertOneAsync(newTweet);
+            try {
+                await _tweets.InsertOneAsync(newTweet);
+            } catch (Exception ex) {
+                Console.WriteLine(ex.ToString());
+            }
             return newTweet;
         }
 

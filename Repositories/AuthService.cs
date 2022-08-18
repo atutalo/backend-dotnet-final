@@ -29,19 +29,20 @@ public class AuthService : IAuthService
       //take the request and call the GetUsername method to get the specific User
         var user = await _userRepo.GetUserByUsername(request.Email)!;
         var verified = false;
-        var myUser = user.FirstOrDefault();
+
         //verify the password is correct
-        if (myUser != null)
+        if (user != null)
         {
-        verified = BCrypt.Net.BCrypt.Verify(myUser?.Password, request.Password);
+            verified = BCrypt.Net.BCrypt.Verify(request.Password, user.Password);
         }
 
-        if (myUser == null || !verified)
+        if (user == null || !verified)
         {
             return String.Empty;
         }
+      
         //create JWT token and return - TODO
-        return BuildToken(myUser);
+        return BuildToken(user);
     }
 
     private string BuildToken(User user)
@@ -55,7 +56,7 @@ public class AuthService : IAuthService
         // Create claims to add to JWT payload
         var claims = new Claim[]
         {
-        new Claim(JwtRegisteredClaimNames.Email, user.Username ?? ""),
+        new Claim(JwtRegisteredClaimNames.Sub, user.Username ?? ""),
         new Claim(JwtRegisteredClaimNames.FamilyName, user.LastName ?? ""),
         new Claim(JwtRegisteredClaimNames.GivenName, user.FirstName ?? "")
         };
@@ -63,7 +64,7 @@ public class AuthService : IAuthService
         // Create token
         var jwt = new JwtSecurityToken(
             claims: claims,
-            expires: DateTime.Now.AddMinutes(10),
+            expires: DateTime.Now.AddMinutes(5),
             signingCredentials: signingCredentials);
 
         // Encode token

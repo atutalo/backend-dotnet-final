@@ -25,7 +25,8 @@ public class AuthController : ControllerBase
         {
             return BadRequest();
         }
-         _authService.CreateUser(user);
+        var result =  _authService.CreateUser(user);
+        Console.WriteLine(result);
         return NoContent();
         //redirect to the login page
     }
