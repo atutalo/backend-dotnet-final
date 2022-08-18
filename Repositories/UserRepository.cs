@@ -45,4 +45,11 @@ public class UserRepository : IUserRepository
         return allUsers.ToList();
     }
 
+    public User FindUser(string username)
+    {
+        var findUsers = _users.Find(user => true);
+        var foundUser = findUsers.ToList().FirstOrDefault(user => user.Username == username);
+        return foundUser;
+    }
+
 }

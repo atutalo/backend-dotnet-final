@@ -59,17 +59,18 @@ public class AuthController : ControllerBase
     [HttpGet]
     [Route("current")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public ActionResult<User> GetCurrentUser()
+    public ActionResult<String> GetCurrentUser()
     {
+        if (HttpContext.User == null) {
+            return Unauthorized();
+        }
         var currentClaim = HttpContext.User.Claims.FirstOrDefault(claim => claim.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"); 
         var currentUsername = currentClaim.Value;
 
-        if (user == null) {
-            return Unauthorized();
-        }
+        Console.WriteLine(currentUsername);
+        var currentUser = _authService.GetSignedInUser(currentUsername);
 
-        var currentUser = await _authService.GetSignedInUser(currentUsername);
-        return Ok(currentUser);
+        return Ok(currentUsername);
     }
 
 }
