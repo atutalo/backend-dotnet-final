@@ -35,7 +35,7 @@ public class AuthController : ControllerBase
 
     [HttpPost]
     [Route("signin")]
-    public ActionResult<string> SignIn(SignInRequest result)
+    public async Task<IActionResult> SignIn(SignInRequest result)
     {
         //Validating that the email and password were passed in - if not, it will return 400 Bad Request
         if (string.IsNullOrWhiteSpace(result.Email) || string.IsNullOrWhiteSpace(result.Password))
@@ -44,17 +44,18 @@ public class AuthController : ControllerBase
         }
 
         //When signed in, we get a token from AuthService
-        var token = _authService.SignIn(result).ToString();
+        var myToken = await _authService.SignIn(result);
         //Auth service will return an empty string if the passwords do not match = 401 Unauthorized 
-        if (string.IsNullOrWhiteSpace(token))
+        if (string.IsNullOrWhiteSpace(myToken))
         {
             return Unauthorized();
         }
         //If the passwords match, the token will be returned
-        return Ok(token);
+        return Ok(new {
+            token = myToken
+        });
     }
 
-/*
     [HttpGet]
     [Route("current")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
@@ -70,7 +71,5 @@ public class AuthController : ControllerBase
         var currentUser = await _authService.GetSignedInUser(currentUsername);
         return Ok(currentUser);
     }
-
-    */
 
 }

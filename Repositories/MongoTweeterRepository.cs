@@ -26,6 +26,7 @@ namespace backend_api.Repositories
         {
             newTweet.Date = DateTime.Now.ToString("yyyy-MM-dd");
             newTweet.Time = DateTime.Now.ToString("hh:mm:ss");
+            
             await _tweets.InsertOneAsync(newTweet);
          
             return newTweet;

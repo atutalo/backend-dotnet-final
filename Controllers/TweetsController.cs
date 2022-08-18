@@ -26,7 +26,6 @@ public class TweetsController : ControllerBase
        return Ok (await _tweetRepository.GetAllTweets());
     }
 
-    
     //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpPost]
     public async Task<ActionResult<Tweet>> CreateTweet(Tweet tweet) {

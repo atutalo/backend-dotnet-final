@@ -60,7 +60,6 @@ public class AuthService : IAuthService
         var claims = new Claim[]
         {
         new Claim(JwtRegisteredClaimNames.Sub, user.Username ?? ""),
-        new Claim("Username", user.Username),
         new Claim(JwtRegisteredClaimNames.FamilyName, user.LastName ?? ""),
         new Claim(JwtRegisteredClaimNames.GivenName, user.FirstName ?? "")
         };
