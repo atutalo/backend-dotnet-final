@@ -1,5 +1,7 @@
 using backend_api.Models;
 using backend_api.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend_api.Controllers;
@@ -51,5 +53,24 @@ public class AuthController : ControllerBase
         //If the passwords match, the token will be returned
         return Ok(token);
     }
+
+/*
+    [HttpGet]
+    [Route("current")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    public ActionResult<User> GetCurrentUser()
+    {
+        var currentClaim = HttpContext.User.Claims.FirstOrDefault(claim => claim.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"); 
+        var currentUsername = currentClaim.Value;
+
+        if (user == null) {
+            return Unauthorized();
+        }
+
+        var currentUser = await _authService.GetSignedInUser(currentUsername);
+        return Ok(currentUser);
+    }
+
+    */
 
 }

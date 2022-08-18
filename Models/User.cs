@@ -8,6 +8,8 @@ namespace backend_api.Models;
 public class User
 {
     [BsonId]
+    [BsonRepresentation(BsonType.ObjectId)]
+    public string? UserId { get; set; }
     [Required]
     [BsonElement("username")]
     public string? Username { get; set; }
@@ -20,7 +22,7 @@ public class User
     public string? LastName { get; set; }
     [BsonElement("location")]
     public string? Location { get; set; }
-    [BsonElement("CreatedDate")]
+    [BsonElement("createdDate")]
     public string? CreatedDate { get; set; }
     [BsonElement("tweets")]
     public List<Tweet>? tweets {get; set;}

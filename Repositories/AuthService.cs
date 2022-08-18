@@ -40,9 +40,12 @@ public class AuthService : IAuthService
         {
             return String.Empty;
         }
-      
+    
         //create JWT token and return - TODO
-        return BuildToken(user);
+        var result = BuildToken(user);
+        return result;
+
+        
     }
 
     private string BuildToken(User user)
@@ -57,6 +60,7 @@ public class AuthService : IAuthService
         var claims = new Claim[]
         {
         new Claim(JwtRegisteredClaimNames.Sub, user.Username ?? ""),
+        new Claim("Username", user.Username),
         new Claim(JwtRegisteredClaimNames.FamilyName, user.LastName ?? ""),
         new Claim(JwtRegisteredClaimNames.GivenName, user.FirstName ?? "")
         };
@@ -64,7 +68,7 @@ public class AuthService : IAuthService
         // Create token
         var jwt = new JwtSecurityToken(
             claims: claims,
-            expires: DateTime.Now.AddMinutes(5),
+            expires: DateTime.Now.AddMinutes(10),
             signingCredentials: signingCredentials);
 
         // Encode token
@@ -72,6 +76,5 @@ public class AuthService : IAuthService
 
         return encodedJwt;
     }
-
     
 }

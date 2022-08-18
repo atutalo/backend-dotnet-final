@@ -22,6 +22,7 @@ public class UserRepository : IUserRepository
 
     public async Task<User> CreateUser(User newUser)
     {
+        newUser.CreatedDate = DateTime.Now.ToString("yyyy-MM-dd");
         try {
             await _users.InsertOneAsync(newUser);
         } catch (Exception ex){
