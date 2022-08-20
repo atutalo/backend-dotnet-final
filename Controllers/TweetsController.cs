@@ -26,6 +26,12 @@ public class TweetsController : ControllerBase
        return Ok (await _tweetService.GetAllTweets());
     }
 
+    [HttpGet, Route("{username}")]
+    public async Task<ActionResult<IEnumerable<Tweet>>> GetTweetsByUser(string username)
+    {
+       return Ok (await _tweetService.GetTweetsByUsername(username));
+    }
+
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpGet, Route("myTweets")]
     public async Task<ActionResult<IEnumerable<Tweet>>> GetMyTweets()

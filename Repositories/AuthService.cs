@@ -76,7 +76,7 @@ public class AuthService : IAuthService
         return encodedJwt;
     }
 
-    public User GetSignedInUser(string username)
+    public User GetUserByUsername(string username)
     {
         var user = _userRepo.FindUser(username);
         return user;

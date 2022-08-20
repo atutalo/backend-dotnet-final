@@ -6,5 +6,5 @@ public interface IAuthService
 {
     User CreateUser(User user);
     Task<string> SignIn(String email, String password);
-    User GetSignedInUser(string username);
+    User GetUserByUsername(string username);
 }

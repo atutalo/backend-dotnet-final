@@ -30,6 +30,12 @@ public class TweetService : ITweetService
         return result;
     }
 
+    public async Task<IEnumerable<Tweet>> GetTweetsByUsername(string user)
+    {
+        var result = await _tweetRepo.GetTweetsByUsername(user);
+        return result;
+    }
+
     public async Task<Tweet> EditTweet(Tweet newTweet)
     {
         var result = await _tweetRepo.EditTweet(newTweet);

@@ -66,9 +66,16 @@ public class AuthController : ControllerBase
         var currentUsername = currentClaim.Value;
 
         Console.WriteLine(currentUsername);
-        var currentUser = _authService.GetSignedInUser(currentUsername);
+        var currentUser = _authService.GetUserByUsername(currentUsername);
 
         return Ok(currentUser);
+    }
+
+    [HttpGet, Route("{username}")]
+    public ActionResult<User> GetUserByUsername(string username)
+    {
+        var currentProfile = _authService.GetUserByUsername(username);
+        return currentProfile;
     }
 
 }
