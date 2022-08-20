@@ -24,16 +24,16 @@ public class AuthService : IAuthService
   
     }
 
-    public async Task<string> SignIn(SignInRequest request)
+    public async Task<string> SignIn(String email, String password)
     {
       //take the request and call the GetUsername method to get the specific User
-        var user = await _userRepo.GetUserByUsername(request.Email)!;
+        var user = await _userRepo.GetUserByUsername(email)!;
         var verified = false;
 
         //verify the password is correct
         if (user != null)
         {
-            verified = BCrypt.Net.BCrypt.Verify(request.Password, user.Password);
+            verified = BCrypt.Net.BCrypt.Verify(password, user.Password);
         }
 
         if (user == null || !verified)

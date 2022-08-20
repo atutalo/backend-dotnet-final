@@ -35,7 +35,7 @@ public class TweetsController : ControllerBase
         return Ok (await _tweetService.GetMyTweets(user));
     }
 
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpPut, Route("{tweetId}")]
     public async Task<ActionResult<Tweet>> EditTweet(Tweet tweet) {
             if (tweet == null || !ModelState.IsValid)
@@ -45,7 +45,7 @@ public class TweetsController : ControllerBase
             return Ok(await _tweetService.EditTweet(tweet));
     }
 
-   // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+   [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpDelete, Route("{tweetId}")]
     public async Task<ActionResult> DeleteTweet(string tweetId) {
         await _tweetService.DeleteTweet(tweetId);

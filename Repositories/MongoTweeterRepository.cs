@@ -74,14 +74,6 @@ namespace backend_api.Repositories
             }
             return currentUser;
         }
-/*
-        public async Task<IEnumerable<Tweet>> GetMyTweets()
-        {
-            var allTweets = await _tweets.FindAsync(tweet => true);
-            return allTweets.ToList();
-        }
-
-        */
     }
     
 }

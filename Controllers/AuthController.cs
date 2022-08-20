@@ -33,33 +33,31 @@ public class AuthController : ControllerBase
         //redirect to the login page
     }
 
-    [HttpPost]
+    [HttpGet]
     [Route("signin")]
-    public async Task<IActionResult> SignIn(SignInRequest result)
+    public async Task<IActionResult> SignIn(String email, String password)
     {
         //Validating that the email and password were passed in - if not, it will return 400 Bad Request
-        if (string.IsNullOrWhiteSpace(result.Email) || string.IsNullOrWhiteSpace(result.Password))
+        if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
         {
             return BadRequest();
         }
 
         //When signed in, we get a token from AuthService
-        var myToken = await _authService.SignIn(result);
+        var myToken = await _authService.SignIn(email, password);
         //Auth service will return an empty string if the passwords do not match = 401 Unauthorized 
         if (string.IsNullOrWhiteSpace(myToken))
         {
             return Unauthorized();
         }
         //If the passwords match, the token will be returned
-        return Ok(new {
-            token = myToken
-        });
+        return Ok(myToken);
     }
 
     [HttpGet]
     [Route("current")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public ActionResult<String> GetCurrentUser()
+    public ActionResult<User> GetCurrentUser()
     {
         if (HttpContext.User == null) {
             return Unauthorized();
@@ -70,7 +68,7 @@ public class AuthController : ControllerBase
         Console.WriteLine(currentUsername);
         var currentUser = _authService.GetSignedInUser(currentUsername);
 
-        return Ok(currentUsername);
+        return Ok(currentUser);
     }
 
 }
