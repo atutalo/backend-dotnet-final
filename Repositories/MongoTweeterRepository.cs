@@ -22,16 +22,12 @@ namespace backend_api.Repositories
             _users = database.GetCollection<User>(settings.UserCollectionName);
         }
 
-        public async Task<Tweet> CreateTweet(Tweet newTweet)
+        public async Task<IEnumerable<Tweet>> GetAllTweets()
         {
-            newTweet.Date = DateTime.Now.ToString("yyyy-MM-dd");
-            newTweet.Time = DateTime.Now.ToString("hh:mm:ss");
-            
-            await _tweets.InsertOneAsync(newTweet);
-         
-            return newTweet;
+            var allTweets = await _tweets.FindAsync(tweet => true);
+            return allTweets.ToList();
         }
-
+                
         public async Task DeleteTweet(string tweetId)
         {
             await _tweets.DeleteOneAsync(tweet => tweet.tweetId == tweetId);
@@ -45,12 +41,35 @@ namespace backend_api.Repositories
             return newTweet;
         }
 
-        public async Task<IEnumerable<Tweet>> GetAllTweets()
+        public User CreateTweet(string username, Tweet newTweet)
+        {   
+            newTweet.Date = DateTime.Now.ToString("yyyy-MM-dd");
+            newTweet.Time = DateTime.Now.ToString("hh:mm:ss");
+
+            var findUsers = _users.Find(user => true);
+            var currentUser = findUsers.ToList().FirstOrDefault(user => user.Username == username);
+        
+            _tweets.InsertOne(newTweet);
+            if (currentUser.tweets == null)
+            {
+                currentUser.tweets = new List<Tweet>();
+                currentUser.tweets.Add(newTweet);
+                _users.ReplaceOne(user => user.Username == currentUser.Username, currentUser);
+            } else {
+                currentUser.tweets.Add(newTweet);
+                _users.ReplaceOne(user => user.Username == currentUser.Username, currentUser);
+
+            }
+            return currentUser;
+        }
+/*
+        public async Task<IEnumerable<Tweet>> GetMyTweets()
         {
             var allTweets = await _tweets.FindAsync(tweet => true);
             return allTweets.ToList();
         }
 
+        */
     }
     
 }

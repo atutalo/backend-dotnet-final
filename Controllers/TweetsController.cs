@@ -12,31 +12,20 @@ public class TweetsController : ControllerBase
 
 {
     private readonly ILogger<TweetsController> _logger;
-    private readonly ITweetRepository _tweetRepository;
+    private readonly ITweetService _tweetService;
 
-    public TweetsController(ILogger<TweetsController> logger, ITweetRepository repo)
+    public TweetsController(ILogger<TweetsController> logger, ITweetService service)
     {
         _logger = logger;
-        _tweetRepository = repo;
+        _tweetService = service;
     }
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Tweet>>> GetAllTweets()
     {
-       return Ok (await _tweetRepository.GetAllTweets());
+       return Ok (await _tweetService.GetAllTweets());
     }
 
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    [HttpPost]
-    public async Task<ActionResult<Tweet>> CreateTweet(Tweet tweet) {
-        if (!ModelState.IsValid || tweet == null)
-        {
-            return BadRequest();
-        }
-        return Ok (await _tweetRepository.CreateTweet(tweet));
-    }
-
-   
     //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpPut, Route("{tweetId}")]
     public async Task<ActionResult<Tweet>> EditTweet(Tweet tweet) {
@@ -44,15 +33,45 @@ public class TweetsController : ControllerBase
             {
                 return BadRequest();
             }
-            return Ok(await _tweetRepository.EditTweet(tweet));
+            return Ok(await _tweetService.EditTweet(tweet));
     }
 
-   
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+   // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpDelete, Route("{tweetId}")]
     public async Task<ActionResult> DeleteTweet(string tweetId) {
-        await _tweetRepository.DeleteTweet(tweetId);
+        await _tweetService.DeleteTweet(tweetId);
         return NoContent();    
         }
 
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [HttpPost]
+    //pass in a tweet as the parameter and return an updated user
+    public ActionResult<User> CreateTweet(Tweet tweet) {
+        if (!ModelState.IsValid || tweet == null)
+        {
+            return BadRequest();
+        }
+        
+            if (HttpContext.User == null) {
+            return Unauthorized();
+        }
+        var currentClaim = HttpContext.User.Claims.FirstOrDefault(claim => claim.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"); 
+        var currentUsername = currentClaim.Value;
+        tweet.User = currentUsername;
+
+        //call out to the tweetService CreateTweet(tweet);
+        return Ok ( _tweetService.CreateTweet(currentUsername, tweet));
+    }
+
+/*
+
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [HttpGet, Route("myTweets")]
+    public async Task<ActionResult<IEnumerable<Tweet>>> GetMyTweets(string username)
+    {
+        //get this to just return the users tweets
+       return Ok (await _tweetRepository.GetMyTweets());
+    }
+
+*/
 }

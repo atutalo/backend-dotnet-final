@@ -45,6 +45,7 @@ builder.Services.Configure<TweeterDatabaseSettings>(
     builder.Configuration.GetSection("TweeterDatabaseSettings"));
 builder.Services.AddSingleton<ITweeterDatabaseSettings>(t => t.GetRequiredService<IOptions<TweeterDatabaseSettings>>().Value);
 builder.Services.AddScoped<ITweetRepository, MongoTweeterRepository>();
+builder.Services.AddScoped<ITweetService, TweetService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
