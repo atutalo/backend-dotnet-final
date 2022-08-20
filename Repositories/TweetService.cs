@@ -24,6 +24,12 @@ public class TweetService : ITweetService
         return result;
     }
 
+    public async Task<IEnumerable<Tweet>> GetMyTweets(string user)
+    {
+        var result = await _tweetRepo.GetMyTweets(user);
+        return result;
+    }
+
     public async Task<Tweet> EditTweet(Tweet newTweet)
     {
         var result = await _tweetRepo.EditTweet(newTweet);
@@ -42,14 +48,4 @@ public class TweetService : ITweetService
     }
 
 }
-
-/*
-     public async Task<User> CreateTweet(Tweet tweet)
-     {
-        var user = await_userRepo.
-        var result = await _tweetRepo.CreateTweetForUser(tweet);
-        return result;
-     };
-
-*/
 

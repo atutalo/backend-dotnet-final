@@ -26,6 +26,15 @@ public class TweetsController : ControllerBase
        return Ok (await _tweetService.GetAllTweets());
     }
 
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [HttpGet, Route("myTweets")]
+    public async Task<ActionResult<IEnumerable<Tweet>>> GetMyTweets()
+    {
+        var currentClaim = HttpContext.User.Claims.FirstOrDefault(claim => claim.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"); 
+        var user = currentClaim.Value;
+        return Ok (await _tweetService.GetMyTweets(user));
+    }
+
     //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpPut, Route("{tweetId}")]
     public async Task<ActionResult<Tweet>> EditTweet(Tweet tweet) {
@@ -63,15 +72,4 @@ public class TweetsController : ControllerBase
         return Ok ( _tweetService.CreateTweet(currentUsername, tweet));
     }
 
-/*
-
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    [HttpGet, Route("myTweets")]
-    public async Task<ActionResult<IEnumerable<Tweet>>> GetMyTweets(string username)
-    {
-        //get this to just return the users tweets
-       return Ok (await _tweetRepository.GetMyTweets());
-    }
-
-*/
 }

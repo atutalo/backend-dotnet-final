@@ -5,6 +5,7 @@ namespace backend_api.Repositories;
 public interface ITweetService
 {
     Task<IEnumerable<Tweet>> GetAllTweets();
+    Task<IEnumerable<Tweet>> GetMyTweets(string user);
     Task<Tweet> EditTweet(Tweet newTweet);
     Task DeleteTweet(string tweetId);
     User CreateTweet(string username, Tweet tweet);
