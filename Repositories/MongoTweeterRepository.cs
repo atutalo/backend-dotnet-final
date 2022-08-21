@@ -57,10 +57,11 @@ namespace backend_api.Repositories
             await _tweets.DeleteOneAsync(tweet => tweet.tweetId == tweetId);
         }
 
-        public async Task<Tweet> EditTweet(Tweet newTweet)
+        public async Task<Tweet> EditTweet(string username, Tweet newTweet)
         {
             newTweet.Date = DateTime.Now.ToString("yyyy-MM-dd");
             newTweet.Time = DateTime.Now.ToString("hh:mm:ss");
+            newTweet.User = username;
             await _tweets.ReplaceOneAsync(tweet => tweet.tweetId == newTweet.tweetId, newTweet);
             return newTweet;
         }
@@ -69,7 +70,7 @@ namespace backend_api.Repositories
         {   
             newTweet.Date = DateTime.Now.ToString("yyyy-MM-dd");
             newTweet.Time = DateTime.Now.ToString("hh:mm:ss");
-
+            newTweet.User = username;
             var findUsers = _users.Find(user => true);
             var currentUser = findUsers.ToList().FirstOrDefault(user => user.Username == username);
         

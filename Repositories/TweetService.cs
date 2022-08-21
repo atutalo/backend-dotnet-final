@@ -36,9 +36,9 @@ public class TweetService : ITweetService
         return result;
     }
 
-    public async Task<Tweet> EditTweet(Tweet newTweet)
+    public async Task<Tweet> EditTweet(string username, Tweet newTweet)
     {
-        var result = await _tweetRepo.EditTweet(newTweet);
+        var result = await _tweetRepo.EditTweet(username, newTweet);
         return result;
     }
 

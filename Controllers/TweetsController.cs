@@ -44,11 +44,18 @@ public class TweetsController : ControllerBase
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpPut, Route("{tweetId}")]
     public async Task<ActionResult<Tweet>> EditTweet(Tweet tweet) {
-            if (tweet == null || !ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-            return Ok(await _tweetService.EditTweet(tweet));
+            if (!ModelState.IsValid || tweet == null)
+        {
+            return BadRequest();
+        }
+        
+            if (HttpContext.User == null) {
+            return Unauthorized();
+        }
+        var currentClaim = HttpContext.User.Claims.FirstOrDefault(claim => claim.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"); 
+        var currentUsername = currentClaim.Value;
+        tweet.User = currentUsername;
+            return Ok(await _tweetService.EditTweet(currentUsername, tweet));
     }
 
    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
