@@ -21,14 +21,13 @@ public class AuthController : ControllerBase
 
     [HttpPost]
     [Route("register")]
-    public ActionResult CreateUser(User user)
+    public async Task<ActionResult> CreateUser(User user)
     {
        if (user == null || !ModelState.IsValid)
         {
             return BadRequest();
         }
-        var result =  _authService.CreateUser(user);
-        Console.WriteLine(result);
+        var result =  await _authService.CreateUser(user);
         return NoContent();
         //redirect to the login page
     }
@@ -57,7 +56,7 @@ public class AuthController : ControllerBase
     [HttpGet]
     [Route("current")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public ActionResult<User> GetCurrentUser()
+    public async Task<ActionResult<User>> GetCurrentUser()
     {
         if (HttpContext.User == null) {
             return Unauthorized();
@@ -66,15 +65,15 @@ public class AuthController : ControllerBase
         var currentUsername = currentClaim.Value;
 
         Console.WriteLine(currentUsername);
-        var currentUser = _authService.GetUserByUsername(currentUsername);
+        var currentUser = await _authService.GetUserByUsername(currentUsername);
 
         return Ok(currentUser);
     }
 
     [HttpGet, Route("{username}")]
-    public ActionResult<User> GetUserByUsername(string username)
+    public async Task<ActionResult<User>> GetUserByUsername(string username)
     {
-        var currentProfile = _authService.GetUserByUsername(username);
+        var currentProfile = await _authService.GetUserByUsername(username);
         return currentProfile;
     }
 

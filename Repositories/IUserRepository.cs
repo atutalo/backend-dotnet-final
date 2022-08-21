@@ -8,6 +8,6 @@ namespace backend_api.Repositories
         Task<IEnumerable<User>> GetAllUsers();
         Task<User> CreateUser(User newUser);
         Task<User> GetUserByUsername(string username);
-        User FindUser(string username);
+        Task<User> FindUser(string username);
     }
 }

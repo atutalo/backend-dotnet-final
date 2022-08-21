@@ -4,7 +4,7 @@ namespace backend_api.Repositories;
 
 public interface IAuthService
 {
-    User CreateUser(User user);
+    Task<User> CreateUser(User user);
     Task<string> SignIn(String email, String password);
-    User GetUserByUsername(string username);
+    Task<User> GetUserByUsername(string username);
 }

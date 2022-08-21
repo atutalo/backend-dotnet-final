@@ -45,9 +45,9 @@ public class UserRepository : IUserRepository
         return allUsers.ToList();
     }
 
-    public User FindUser(string username)
+    public async Task<User> FindUser(string username)
     {
-        var findUsers = _users.Find(user => true);
+        var findUsers = await _users.FindAsync(user => true);
         var foundUser = findUsers.ToList().FirstOrDefault(user => user.Username == username);
         return foundUser;
     }

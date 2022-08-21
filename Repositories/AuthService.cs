@@ -14,12 +14,12 @@ public class AuthService : IAuthService
         _userRepo = userRepo; 
         _config = config;
     }
-    public User CreateUser(User user)
+    public async Task<User> CreateUser(User user)
     { 
         var passwordHash = BCrypt.Net.BCrypt.HashPassword(user.Password);
         user.Password = passwordHash;
 
-        _userRepo.CreateUser(user);
+        await _userRepo.CreateUser(user);
         return user;
   
     }
@@ -76,9 +76,9 @@ public class AuthService : IAuthService
         return encodedJwt;
     }
 
-    public User GetUserByUsername(string username)
+    public async Task<User> GetUserByUsername(string username)
     {
-        var user = _userRepo.FindUser(username);
+        var user = await _userRepo.FindUser(username);
         return user;
     }
     
