@@ -52,8 +52,11 @@ namespace backend_api.Repositories
             return currentUser.tweets;
         }
 
-        public async Task DeleteTweet(string tweetId)
+        public async Task DeleteTweet(string tweetId, string username)
         {
+            var findUsers = await _users.FindAsync(user => true);
+            var currentUser = findUsers.ToList().FirstOrDefault(user => user.Username == username);
+        
             await _tweets.DeleteOneAsync(tweet => tweet.tweetId == tweetId);
         }
 

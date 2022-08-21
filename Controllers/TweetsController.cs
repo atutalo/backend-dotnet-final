@@ -61,7 +61,11 @@ public class TweetsController : ControllerBase
    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [HttpDelete, Route("{tweetId}")]
     public async Task<ActionResult> DeleteTweet(string tweetId) {
-        await _tweetService.DeleteTweet(tweetId);
+
+        var currentClaim = HttpContext.User.Claims.FirstOrDefault(claim => claim.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"); 
+        var currentUsername = currentClaim.Value;
+
+        await _tweetService.DeleteTweet(tweetId, currentUsername);
         return NoContent();    
         }
 

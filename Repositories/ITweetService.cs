@@ -8,6 +8,6 @@ public interface ITweetService
     Task<IEnumerable<Tweet>> GetMyTweets(string user);
     Task<IEnumerable<Tweet>> GetTweetsByUsername(string user);
     Task<Tweet> EditTweet(string username, Tweet tweet);
-    Task DeleteTweet(string tweetId);
+    Task DeleteTweet(string tweetId, string username);
     User CreateTweet(string username, Tweet tweet);
 }

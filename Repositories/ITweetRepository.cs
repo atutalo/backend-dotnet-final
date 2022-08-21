@@ -8,7 +8,7 @@ namespace backend_api.Repositories
         Task<IEnumerable<Tweet>> GetAllTweets();
         Task<Tweet> EditTweet(string username, Tweet newTweet);
         Task<IEnumerable<Tweet>> GetTweetsByUsername(string user);
-        Task DeleteTweet(string tweetId);
+        Task DeleteTweet(string tweetId, string username);
         User CreateTweet(string username, Tweet newTweet);
         Task<IEnumerable<Tweet>> GetMyTweets(string user);
 

@@ -42,9 +42,9 @@ public class TweetService : ITweetService
         return result;
     }
 
-    public async Task DeleteTweet(string tweetId)
+    public async Task DeleteTweet(string tweetId, string username)
     {
-        await _tweetRepo.DeleteTweet(tweetId);
+        await _tweetRepo.DeleteTweet(tweetId, username);
     }
 
      public User CreateTweet(string username, Tweet tweet)
