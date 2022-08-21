@@ -56,16 +56,29 @@ namespace backend_api.Repositories
         {
             var findUsers = await _users.FindAsync(user => true);
             var currentUser = findUsers.ToList().FirstOrDefault(user => user.Username == username);
-        
+
+            var tweetToRemove = currentUser.tweets.Find(Tweet => Tweet.tweetId == tweetId);
+            currentUser.tweets.Remove(tweetToRemove);
+            await _users.ReplaceOneAsync(user => user.Username == username, currentUser);
             await _tweets.DeleteOneAsync(tweet => tweet.tweetId == tweetId);
         }
 
         public async Task<Tweet> EditTweet(string username, Tweet newTweet)
         {
+            var findUsers = await _users.FindAsync(user => true);
+            var currentUser = findUsers.ToList().FirstOrDefault(user => user.Username == username);
+            var tweetToRemove= currentUser.tweets.Find(Tweet => Tweet.tweetId == newTweet.tweetId);
+
             newTweet.Date = DateTime.Now.ToString("yyyy-MM-dd");
             newTweet.Time = DateTime.Now.ToString("hh:mm:ss");
             newTweet.User = username;
             await _tweets.ReplaceOneAsync(tweet => tweet.tweetId == newTweet.tweetId, newTweet);
+
+            currentUser.tweets.Remove(tweetToRemove);
+            currentUser.tweets.Add(newTweet);
+            await _users.ReplaceOneAsync(user => user.Username == username, currentUser);
+            
+
             return newTweet;
         }
 
